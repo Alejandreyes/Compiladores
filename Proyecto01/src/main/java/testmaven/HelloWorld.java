@@ -1,4 +1,4 @@
-package com.compiladores.ciencias.com;
+package testmaven;
 import java.io.*;
 
 public class HelloWorld {
@@ -6,7 +6,6 @@ public class HelloWorld {
     public static void main(String args[]){
         try {
             Reader reader = new FileReader("src/main/resources/test.txt");
-            System.out.println("Hola");
             Yylex y = new Yylex(reader);
             y.yylex();
         }

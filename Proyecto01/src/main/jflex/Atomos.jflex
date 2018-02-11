@@ -1,4 +1,4 @@
-package com.compiladores.ciencias.com;
+package testmaven;
 %%
 %public
 %standalone

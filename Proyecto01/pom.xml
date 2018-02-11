@@ -4,6 +4,11 @@
   <groupId>com.compiladores.ciencias.com</groupId>
   <artifactId>Proyecto01</artifactId>
   <packaging>jar</packaging>
+  <properties>
+    <project.bouild.sourceEncoding>UTF-8</project.bouild.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
   <version>1.0-SNAPSHOT</version>
   <name>Proyecto01</name>
   <url>http://maven.apache.org</url>
@@ -30,7 +35,7 @@
           </execution>
         </executions>
       </plugin>
-	<plugin>
+  <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.2.1</version>
@@ -42,17 +47,13 @@
                 </execution>
             </executions>
             <configuration>
-                <mainClass>com.compiladores.ciencias.com.HelloWorld</mainClass>
+                <mainClass>testmaven.HelloWorld</mainClass>
             </configuration>
         </plugin>
-
-
-
-
     </plugins>
     <!-- ... -->
 </build>
-	  <!-- ... -->
+    <!-- ... -->
 
 
 </project>
