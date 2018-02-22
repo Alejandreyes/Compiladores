@@ -1,0 +1,10 @@
+111111
+NOMBRE1
+$id234_
+_fddsfid
+for
+#Term
+#        Este es un comentario en python
+1.9999999
+.13123123
+9.

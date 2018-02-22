@@ -47,7 +47,7 @@
                 </execution>
             </executions>
             <configuration>
-                <mainClass>testmaven.HelloWorld</mainClass>
+                <mainClass>testmaven.ciencias.unam.compiladores.HelloWorld</mainClass>
             </configuration>
         </plugin>
     </plugins>

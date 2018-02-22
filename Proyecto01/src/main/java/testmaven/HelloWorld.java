@@ -1,4 +1,4 @@
-package testmaven;
+package testmaven.ciencias.unam.compiladores;
 import java.io.*;
 
 public class HelloWorld {
