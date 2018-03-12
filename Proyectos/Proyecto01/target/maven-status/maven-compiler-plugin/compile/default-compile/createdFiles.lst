@@ -1,5 +1,5 @@
 testmaven/Test.class
-testmaven/Mais.class
 testmaven/Aléxico.class
+testmaven/ControladorAnalisisLexico.class
 testmaven/AnalizadorLexico.class
 ErrorParseException.class

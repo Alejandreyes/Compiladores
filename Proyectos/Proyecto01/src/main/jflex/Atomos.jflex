@@ -3,7 +3,7 @@ package testmaven;
 %{
   int espacios = 0 ;
   /* %line Sirve para crear un identificador en que linea se encuentra el token que esta siendo reconozido*/
-  ControladorAnalisisLexico controlador  = ControladorAnalisisLexico();
+  ControladorAnalisisLexico controlador  = new ControladorAnalisisLexico();
 %}
 %class Aléxico
 %public
@@ -35,7 +35,7 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
 <ESPACIOS> {
   " "       {yybegin(YYINITIAL);}
   (" ")+    {
-              
+
               System.out.print("NUMERO DE ESPACIOS("+yytext().length()+")");
               yybegin(YYINITIAL);
               }
