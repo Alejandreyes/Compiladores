@@ -7,9 +7,9 @@ package testmaven;
 %}
 %class Aléxico
 %public
-%standalone
 %unicode
 %line
+%type String
 PUNTO   = \.
 BOOLEAN = True | False
 ENTERO  = [1-9][0-9]* | 0+
@@ -23,26 +23,26 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
 %state ESPACIOS
 %%
 \n     { yybegin(ESPACIOS);  }
-{FLOAT} { System.out.println("FLOAT ("+yytext()+")"); }
-{RESERVED_WORD} { System.out.print("RESERVADA("+yytext()+")"); }
-{BOOLEAN}     { System.out.print("BOOLEAN("+yytext()+")"); }
-{SEPARADOR}   { System.out.print("SEPARADOR("+yytext()+")"); }
-{ENTERO}      { System.out.print("ENTERO("+yytext()+")"); }
-{STRING}      { System.out.print("CADENA( "+yytext() + ")"); }
-{ID_PYTHON}    { System.out.print("ID_PYTHON("+yytext() + ")"); }
-{COMMENT}     { System.out.print("COMMENT( "+yytext() + ")"); }
-{OPERADOR}    { System.out.print("OPERADOR("+yytext()+")"); }
+{FLOAT} { return "FLOAT ("+yytext()+")"; }
+{RESERVED_WORD} { return "RESERVADA("+yytext()+")"; }
+{BOOLEAN}     { return "BOOLEAN("+yytext()+")"; }
+{SEPARADOR}   { return "SEPARADOR("+yytext()+")"; }
+{ENTERO}      { return "ENTERO("+yytext()+")"; }
+{STRING}      { return "CADENA( "+yytext() + ")"; }
+{ID_PYTHON}    { return "ID_PYTHON("+yytext() + ")"; }
+{COMMENT}     { return "COMMENT( "+yytext() + ")"; }
+{OPERADOR}    { return "OPERADOR("+yytext()+")"; }
+
 <ESPACIOS> {
-  " "       {yybegin(YYINITIAL);}
+" "   {yybegin(YYINITIAL);}
   (" ")+    {
-
-              System.out.print("NUMERO DE ESPACIOS("+yytext().length()+")");
               yybegin(YYINITIAL);
-              }
-  \t        {
-              espacios += 4 ;System.out.print("NUMERO DE ESPACIOS("+espacios+")");
-              yybegin(YYINITIAL);
+              return ("NUMERO DE ESPACIOS("+yytext().length()+")");
             }
-
+  \t        {
+              espacios += 4 ;
+              yybegin(YYINITIAL);
+              return ("NUMERO DE ESPACIOS("+espacios+")");
+            }
 }
 .             { }
