@@ -4,11 +4,20 @@ import java.io.*;
 public class Test {
 
     public static void main (String[] args){
-      AnalizadorLexico al = new AnalizadorLexico("src/main/resources/FizzBuzz.p","src/out/FizzBuzz.plx");
-      al.analiza();
+      AnalizadorLexico al ;
+
+      System.out.println("/********************************************************************************"
+      +"+++++++++++++++++++++++++Caso todo va bien"+
+      "/********************************************************************************");
+      try{
+        al = new AnalizadorLexico("src/main/resources/FizzBuzz.p","src/out/FizzBuzz.plx");
+        al.analiza();
+      }catch (RuntimeException e) {
+        System.out.println("\n"+e);
+      }
       System.out.println();
       System.out.println("/********************************************************************************"
-      +"+++++++++++++++++++++++++CAso Error cadena"+
+      +"+++++++++++++++++++++++++Caso Error cadena"+
       "/********************************************************************************");
 
 

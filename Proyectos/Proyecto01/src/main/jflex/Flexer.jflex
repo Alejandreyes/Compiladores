@@ -41,6 +41,7 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
               if(resultado==""){
                   return "SALTO\n";
               }
+
               return "SALTO\n"+(resultado+"("+espacios+")");
               }
 (\t|" ")+     {
