@@ -14,7 +14,7 @@ BOOLEAN = True | False
 ENTERO  = [1-9][0-9]* | 0+
 FLOAT = {ENTERO} {PUNTO} {ENTERO} | {PUNTO} {ENTERO} | {ENTERO} {PUNTO}
 RESERVED_WORD = and|or|not|for|while|if|else|elif|print
-STRING = \" (.[^\\])* \"
+STRING = \" (.[^\\\"])* \"
 SEPARADOR = :
 OPERADOR = \+|\-|\*|\**|\/|\/\/|\%|\<|\>|\>=|\<=|\=|\!|\==
 COMMENT = #.*
@@ -54,4 +54,6 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
                 return "SALTO\n"+(resultado+"("+espacios+")");
                 }
 }
+<<EOF>>       { 
+                throw new RuntimeException("");}
 .             { throw new RuntimeException("Error en la linea: " + yyline); }

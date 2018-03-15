@@ -68,5 +68,7 @@ public class ControladorAnalisisLexico {
         throw new RuntimeException("Problemas de Identacion en la linea: " + linea);
 
     }
-
+    public String terminaIdentacion(){
+      
+    }
 }
