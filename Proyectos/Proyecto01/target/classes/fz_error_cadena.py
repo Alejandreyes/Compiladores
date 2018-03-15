@@ -2,7 +2,7 @@ i = 1
 while i <= limite:
     valor = 1
     if (i%3 == 0 and i%5 == 0):
-        print("fizzbuzz\\")
+        print("fizzbuzz')
         valor = 0
     if i % 3 == 0 :
         print("fizz")
