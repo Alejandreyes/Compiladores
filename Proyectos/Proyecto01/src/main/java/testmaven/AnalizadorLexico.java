@@ -23,6 +23,7 @@ public class AnalizadorLexico {
 
   public void analiza(){
     String l ="";
+    boolean bandera  = true; 
     try{
       l= lexer.yylex() ;
       while( l !=null ){
@@ -31,9 +32,9 @@ public class AnalizadorLexico {
         l = lexer.yylex() ;
       }
       fichero.close();
-      fichero = null ;
+      
     }catch(Final ex){
-     System.out.println("");
+      bandera = false; 
     }catch(RuntimeException ex){
       System.out.println("\n"+ex.getMessage());
       l+="\n"+ex.getMessage();
@@ -41,14 +42,14 @@ public class AnalizadorLexico {
     catch (IOException ex) {
       System.out.println("\n"+ex.getMessage());
       l+="\n"+ex.getMessage();
-      fichero.write(l);
     }
     finally{
       try{
-        if(fichero!= null){
-          //fichero.write(l);
-          fichero.close();
+        if(bandera){
+          fichero.write(l);
         }
+
+          fichero.close();
 
       }catch (Exception e) {
 

@@ -61,7 +61,7 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
 <<EOF>>       {
                 if(!paso){
                   paso = true;
-                    return controlador.terminaIdentacion();
+                    return "\n"+controlador.terminaIdentacion();
                   }
                   throw new Final("Final de la linea");
         
