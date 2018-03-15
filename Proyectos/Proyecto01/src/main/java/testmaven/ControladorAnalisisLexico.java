@@ -43,7 +43,10 @@ public class ControladorAnalisisLexico {
      * @param numEspacios variable que mide el numero de espacios antes de la
      * identacion del parrafo actual
      */
-    public String representa(int numEspacios) {
+    public String representa(int numEspacios, int linea) {
+      if(numEspacios == identActual){
+        return "";
+      }
         if (numEspacios > 0) {
             if (numEspacios > identActual) {
                 identActual = numEspacios;
@@ -61,10 +64,8 @@ public class ControladorAnalisisLexico {
                 }
             }
         }
-        if(numEspacios == identActual){
-          return "";
-        }
-        throw new RuntimeException("Identacion no encaja");
+
+        throw new RuntimeException("Problemas de Identacion en la linea: " + linea);
 
     }
 

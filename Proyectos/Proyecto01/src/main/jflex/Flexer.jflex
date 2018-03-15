@@ -1,7 +1,6 @@
 package testmaven;
 %%
 %{
-  int espacios = 0 ;
   /* %line Sirve para crear un identificador en que linea se encuentra el token que esta siendo reconozido*/
   ControladorAnalisisLexico controlador  = new ControladorAnalisisLexico();
 %}
@@ -35,26 +34,23 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
 " "           {}
 ("("|")")       {}
 <ESPACIOS> {
-" "         { return "SALTO";
-            yybegin(YYINITIAL);}
-  (" ")+    {
-              int espacios = yytext().length();
+(" ")*     {
+              int espacios = yylength() ;
               yybegin(YYINITIAL);
-              String resultado = controlador.representa(espacios);
+              String resultado = controlador.representa(espacios,yyline);
               if(resultado==""){
-                return "\n";
+                  return "SALTO\n";
               }
               return "SALTO\n"+(resultado+"("+espacios+")");
-            }
-  (\t|" ")+  {
-              int espacios = yytext().length();
-              yybegin(YYINITIAL);
-              String resultado = controlador.representa(espacios);
-              if(resultado==""){
-                return "\n";
               }
-              return "SALTO\n"+(resultado+"("+espacios+")");
-            }
+(\t|" ")+     {
+                int espacios = yytext().length();
+                yybegin(YYINITIAL);
+                String resultado = controlador.representa(espacios,yyline);
+                if(resultado==""){
+                  return "\n";
+                }
+                return "SALTO\n"+(resultado+"("+espacios+")");
+                }
 }
-.             { yyline +=1; /* Esto ocurre porque comienza a contar desde la linea  0 que no es natural para ningun editor de texto  */
-                throw new RuntimeException("Error en la linea: " + yyline); }
+.             { throw new RuntimeException("Error en la linea: " + yyline); }

@@ -18,12 +18,12 @@ public class AnalizadorLexico {
         try{
             String l = lexer.yylex() ;
               while( l !=null ){
-                      System.out.println(l);
+                      System.out.print(l);
                       l = lexer.yylex() ;
               }
 
         }catch(IOException ex){
-            System.out.println(ex.getMessage());
+            System.out.println("\n"+ex.getMessage());
         }
     }
 
