@@ -4,6 +4,10 @@ import java.util.Stack;
 public class ControladorAnalisisLexico {
   private Stack<Integer> stackBloques;
     private int identActual;
+    public ControladorAnalisisLexico(){
+      identActual = 0 ;
+      stackBloques = new Stack();
+    }
 
     public Stack<Integer> getStackBloques() {
         return stackBloques;
@@ -39,25 +43,28 @@ public class ControladorAnalisisLexico {
      * @param numEspacios variable que mide el numero de espacios antes de la
      * identacion del parrafo actual
      */
-    public void representa(int numEspacios) {
-        if (numEspacios == 0) {
-            return;
-        }
+    public String representa(int numEspacios) {
         if (numEspacios > 0) {
             if (numEspacios > identActual) {
                 identActual = numEspacios;
                 stackBloques.add(numEspacios);
+                return "IDENTA";
             }
         }
         if (numEspacios < identActual) {
             while (!stackBloques.isEmpty()) {
-                if (stackBloques.pop() == numEspacios) {
+                if (stackBloques.peek() == numEspacios) {
                     identActual = numEspacios;
-                    return;
+                    return "DEIDENTA";
+                }else{
+                  stackBloques.pop();
                 }
             }
-            throw new RuntimeException("Identacion no encaja");
         }
+        if(numEspacios == identActual){
+          return "";
+        }
+        throw new RuntimeException("Identacion no encaja");
 
     }
 

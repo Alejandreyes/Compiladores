@@ -6,7 +6,7 @@ public class AnalizadorLexico {
 
     public AnalizadorLexico(String archivo){
         try {
-            Reader lector = new FileReader("src/main/resources/FizzBuzz.py");
+            Reader lector = new FileReader(archivo);
             lexer = new Aléxico(lector);
         }
         catch(FileNotFoundException ex) {
@@ -16,7 +16,12 @@ public class AnalizadorLexico {
 
     public void analiza(){
         try{
-          lexer.yylex();
+            String l = lexer.yylex() ;
+              while( l !=null ){
+                      System.out.println(l);
+                      l = lexer.yylex() ;
+              }
+
         }catch(IOException ex){
             System.out.println(ex.getMessage());
         }

@@ -15,7 +15,7 @@ BOOLEAN = True | False
 ENTERO  = [1-9][0-9]* | 0+
 FLOAT = {ENTERO} {PUNTO} {ENTERO} | {PUNTO} {ENTERO} | {ENTERO} {PUNTO}
 RESERVED_WORD = and|or|not|for|while|if|else|elif|print
-STRING = \" ([:jletter:])* \"
+STRING = \" (.[^\\])* \"
 SEPARADOR = :
 OPERADOR = \+|\-|\*|\**|\/|\/\/|\%|\<|\>|\>=|\<=|\=|\!|\==
 COMMENT = #.*
@@ -28,21 +28,33 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
 {BOOLEAN}     { return "BOOLEAN("+yytext()+")"; }
 {SEPARADOR}   { return "SEPARADOR("+yytext()+")"; }
 {ENTERO}      { return "ENTERO("+yytext()+")"; }
-{STRING}      { return "CADENA( "+yytext() + ")"; }
+{STRING}      { return "CADENA("+yytext() + ")"; }
 {ID_PYTHON}    { return "ID_PYTHON("+yytext() + ")"; }
 {COMMENT}     { return "COMMENT( "+yytext() + ")"; }
 {OPERADOR}    { return "OPERADOR("+yytext()+")"; }
-
+" "           {}
+("("|")")       {}
 <ESPACIOS> {
-" "   {yybegin(YYINITIAL);}
+" "         {
+            yybegin(YYINITIAL);}
   (" ")+    {
+              int espacios = yytext().length();
               yybegin(YYINITIAL);
-              return ("NUMERO DE ESPACIOS("+yytext().length()+")");
+              String resultado = controlador.representa(espacios);
+              if(resultado==""){
+                return "";
+              }
+              return (resultado+"("+espacios+")");
             }
-  \t        {
-              espacios += 4 ;
+  (\t|" ")+  {
+              int espacios = yytext().length();
               yybegin(YYINITIAL);
-              return ("NUMERO DE ESPACIOS("+espacios+")");
+              String resultado = controlador.representa(espacios);
+              if(resultado==""){
+                return "";
+              }
+              return (resultado+"("+espacios+")");
             }
 }
-.             { }
+.             { yyline +=1; /* Esto ocurre porque comienza a contar desde la linea  0 que no es natural para ningun editor de texto  */
+                throw new RuntimeException("Error en la linea: " + yyline); }
