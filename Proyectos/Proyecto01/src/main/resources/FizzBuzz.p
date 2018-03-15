@@ -12,4 +12,4 @@ while i <= limite:
         valor = 0
     if(valor == 1):
         print(i)
-                    i= i + 1
+            i= i + 1

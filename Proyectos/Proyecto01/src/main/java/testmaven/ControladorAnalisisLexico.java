@@ -70,6 +70,7 @@ public class ControladorAnalisisLexico {
     }
     public String terminaIdentacion(){
       String finalDeLinea = "";
+      
       while(!stackBloques.isEmpty()){
         int s = stackBloques.pop();
         finalDeLinea += "DEIDENTA(" + s+ ")\n";

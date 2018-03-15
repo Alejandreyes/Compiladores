@@ -32,6 +32,8 @@ public class AnalizadorLexico {
       }
       fichero.close();
       fichero = null ;
+    }catch(Final ex){
+     System.out.println("");
     }catch(RuntimeException ex){
       System.out.println("\n"+ex.getMessage());
       l+="\n"+ex.getMessage();
@@ -39,12 +41,12 @@ public class AnalizadorLexico {
     catch (IOException ex) {
       System.out.println("\n"+ex.getMessage());
       l+="\n"+ex.getMessage();
+      fichero.write(l);
     }
     finally{
       try{
         if(fichero!= null){
-
-          fichero.write(l);
+          //fichero.write(l);
           fichero.close();
         }
 

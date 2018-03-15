@@ -1,8 +1,8 @@
 package testmaven;
 %%
 %{
-  int paso =0;
-  /* %line Sirve para crear un identificador en que linea se encuentra el token que esta siendo reconozido*/
+  boolean paso =false;
+  /* %line Sirve para crear un identificador en que linea se encuentra el token que esta siendo reconocido*/
   ControladorAnalisisLexico controlador  = new ControladorAnalisisLexico();
 %}
 %class Flexer
@@ -54,14 +54,15 @@ ID_PYTHON = ([:jletter:]|_) ([:jletter:]|[:jletterdigit:]|_)*
                 }
                 return "SALTO\n"+(resultado+"("+espacios+")");
                 }
-}
-<<EOF>>       {   if(paso==0){
-                      paso++;
-                      return controlador.terminaIdentacion();
-                    }else{
-                      throw new RuntimeException("");
-                    }
 
 
-              }
+} 
 .             { throw new RuntimeException("Error en la linea: " + yyline); }
+<<EOF>>       {
+                if(!paso){
+                  paso = true;
+                    return controlador.terminaIdentacion();
+                  }
+                  throw new Final("Final de la linea");
+        
+}               
