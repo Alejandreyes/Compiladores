@@ -1,0 +1,31 @@
+Gramática 2
+
+La gramática escrita en forma EBNF es:
+
+E : T ((+|-) E)*
+T : F ((*|/) T)*
+F : [-] NUMBER
+
+La gramática sin estrella de Kleene aumentada es:
+
+ S : E
+ E : T | T + E | T - E
+ T : F | F * T | F / T 
+ F : [-] NUMBER
+
+La misma se encuentra implementada en src/main/byaccj/ari.y
+
+Los ejemplos que se proponen en el pdf se encuentran en el mismo archivo 
+solo son diferentes lineas
+
+    src/main/resources/test.txt 
+    
+Para compilar ocupando maven ocupamos:
+
+	$ mvn clean initialize package
+
+Para probar los archivos de ejemplo:
+
+	$ java -cp target/Analisissintactico-1.0.jar asintactico.Parser src/main/resources/test.txt
+	
+Nota: Se modificó el archivo pom.xml para que coincidiera con el nombre del comando byaccj (En el ejemplo estaba como byacc solamente)
