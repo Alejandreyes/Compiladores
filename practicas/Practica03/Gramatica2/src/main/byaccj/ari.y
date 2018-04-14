@@ -3,35 +3,13 @@
   import java.io.*;
 %}
 
-/*%token<dval> NUMERO// Declaracion  de Terminales 
-%type<dval>  LINEA E  // Declaracion de no terminales
-
-/* Gramática con recursión izquierda 
-%%*/
-
-
-
-/*input : Lista {$$ = $1; System.out.println("[OK] "+ $$  );}
-      |       { System.out.println("[Ok Lista Vacía] ");}
-;
-
-Lista: Lista NODO {$$ = $1 + $2;}
-     | NODO {$$ = $1;}*/
-/*LINEA : E  { $$ = $1; System.out.println("[OK] "+ $$  );} 
-  | LINEA E { $$ = $2; System.out.println("[OK] "+ $$  );}
-  ;
-LINEA : E  { $$ = $1; System.out.println("[OK] "+ $$  );}
-E : NUMERO '+' NUMERO   {$$ = $1 + $3 ; System.out.println("El valor resultado es igual a" +  $1); }
-  | NUMERO       {$$ = $1;}
-  ;*/
-
  // %token NL          /* newline  */
 %token <dval> NUMERO  /* a number */
 
 %type <dval> exp fact term MENOS
 
-%left '-' '+'
-%left '*' '/'
+%right '-' '+'
+%right  '*' '/'
 
       
 %%
@@ -40,16 +18,18 @@ input:   /* empty string */
        | input line
        ;
       
-line:   exp  { System.out.println(" = " + $1);  }
+line:   exp  { System.out.println("[OK] " + $1);  }
        ;
       
-exp:  exp '+' exp        { $$ = $1 + $3; }
-     | exp '-' exp           {$$ = $1 - $3 ; } 
-     | term                //  {$$ = $1 ; }
-  ;  
-term : term '*' term                { $$ = $1 * $3; }
-    | term '/' term                 { $$ = $1 / $3; }
-    | fact
+exp:  term              {$$ = $1 ;}
+     | term '+' exp        { $$ = $1 + $3; }
+     | term '-' exp           {$$ = $1 - $3 ; } 
+    
+    ;  
+term : fact                     {$$ = $1 ;}
+    | fact '*' term                { $$ = $1 * $3; }
+    |  fact '/' term                 { $$ = $1 / $3; }
+     
   ;
 fact  : NUMERO                      {$$ = $1 ; }                         
     | MENOS NUMERO                    {$$ = -1 * $2 ; }
