@@ -13,5 +13,6 @@ package asintactico;
 %public
 %unicode
 %%
-a             { parser.yylval = new ParserVal(yytext()); return parser.NODO; }
+[1-9][0-9]*			{parser.yylval = new ParserVal(yytext()); return parser.NUMERO ; }
+([1-9][0-9]* | 0+) \. ([1-9][0-9]* | 0+)      {parser.yylval = new ParserVal(yytext()); return parser.NUMERO  ;}
 .             { }

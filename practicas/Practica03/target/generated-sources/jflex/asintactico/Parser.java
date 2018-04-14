@@ -158,42 +158,38 @@ final ParserVal dup_yyval(ParserVal val)
   return dup;
 }
 //#### end semantic value section ####
-public final static short NODO=257;
+public final static short NUMERO=257;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    0,    1,    1,
-};
-final static short yylen[] = {                            2,
-    1,    0,    2,    1,
-};
-final static short yydefred[] = {                         0,
-    4,    0,    0,    3,
-};
-final static short yydgoto[] = {                          2,
-    3,
-};
-final static short yysindex[] = {                      -257,
-    0,    0, -256,    0,
-};
-final static short yyrindex[] = {                         2,
-    0,    0,    3,    0,
-};
-final static short yygindex[] = {                         0,
     0,
 };
-final static int YYTABLESIZE=3;
+final static short yylen[] = {                            2,
+    1,
+};
+final static short yydefred[] = {                         0,
+    1,    0,
+};
+final static short yydgoto[] = {                          2,
+};
+final static short yysindex[] = {                      -257,
+    0,    0,
+};
+final static short yyrindex[] = {                         0,
+    0,    0,
+};
+final static short yygindex[] = {                         0,
+};
+final static int YYTABLESIZE=0;
 static short yytable[];
 static { yytable();}
 static void yytable(){
 yytable = new short[]{                          1,
-    4,    2,    1,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                        257,
-  257,    0,    0,
 };
 }
 final static short YYFINAL=2;
@@ -215,17 +211,14 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,null,"NODO",
+null,null,null,"NUMERO",
 };
 final static String yyrule[] = {
-"$accept : input",
-"input : Lista",
-"input :",
-"Lista : Lista NODO",
-"Lista : NODO",
+"$accept : E",
+"E : NUMERO",
 };
 
-//#line 18 "../../../../src/main/byaccj/ari.y"
+//#line 21 "../../../../src/main/byaccj/ari.y"
 /* Referencia a analizador léxico */
 private Nodos lexer;
 
@@ -256,7 +249,7 @@ public static void main(String args[]) throws IOException {
     Parser parser = new Parser(new FileReader(args[0]));
     parser.yyparse();
 }
-//#line 187 "Parser.java"
+//#line 180 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -411,22 +404,10 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 11 "../../../../src/main/byaccj/ari.y"
-{yyval.sval = val_peek(0).sval; System.out.println("[OK] "+ yyval.sval  );}
+//#line 18 "../../../../src/main/byaccj/ari.y"
+{yyval.sval = val_peek(0).sval ;System.out.println("[OK] "+ yyval.sval  );}
 break;
-case 2:
-//#line 12 "../../../../src/main/byaccj/ari.y"
-{ System.out.println("[Ok Lista Vacía] ");}
-break;
-case 3:
-//#line 15 "../../../../src/main/byaccj/ari.y"
-{yyval.sval = val_peek(1).sval + val_peek(0).sval;}
-break;
-case 4:
-//#line 16 "../../../../src/main/byaccj/ari.y"
-{yyval.sval = val_peek(0).sval;}
-break;
-//#line 352 "Parser.java"
+//#line 333 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

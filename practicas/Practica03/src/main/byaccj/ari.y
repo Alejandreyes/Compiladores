@@ -3,17 +3,20 @@
   import java.io.*;
 %}
 
-%token<sval> NODO
-%type<sval> Lista input
+%token<sval> NUMERO// Declaracion  de Terminales 
+%type<sval> E // Declaracion de no terminales
 
 /* Gramática con recursión izquierda */
 %%
-input : Lista {$$ = $1; System.out.println("[OK] "+ $$  );}
+/*input : Lista {$$ = $1; System.out.println("[OK] "+ $$  );}
       |       { System.out.println("[Ok Lista Vacía] ");}
 ;
 
 Lista: Lista NODO {$$ = $1 + $2;}
-     | NODO {$$ = $1;}
+     | NODO {$$ = $1;}*/
+
+E : NUMERO  {$$ = $1 ;System.out.println("[OK] "+ $$  );} 
+  ;
 %%
 /* Referencia a analizador léxico */
 private Nodos lexer;
