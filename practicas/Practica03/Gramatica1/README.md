@@ -1,11 +1,9 @@
 # Gramática 1
 La gramática escrita en forma EBNF es:
 
-     #+BEGIN_EXAMPLE
      E : (E (+|-))* T
      T : (T (*|/))* F
      F : [-] NUMBER
-     #+END_EXAMPLE
 
 La gramática sin estrella de Kleene aumentada es:
 
