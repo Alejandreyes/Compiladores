@@ -33,12 +33,11 @@ T -> L(*|/)F | F
 L -> T | L(*|/)F | F
 F -> - NUMBER | NUMBER
 */
-
+// S es el símbolo inicial.
 S : E {$$ = $1; System.out.println("[OK] "+$$);}
-  | /*Cadena vacía*/ {System.out.println("[OK] Cadena vacía");}
+  | /*Cadena vacía*/ {yyerror("Cadena vacía");}
   ;
 
-//E es el símbolo inicial.
 E : K '+' T {$$ = $1 + $3;} 
   | K '-' T {$$ = $1 - $3;}
   | T {$$ = $1;}
@@ -51,13 +50,13 @@ K : E {$$ = $1;}
   ;
 
 T : L '*' F {$$ = $1 * $3;}
-  | L '/' F {$$ = $1 / $3;} // Checar el caso de división entre cero.
+  | L '/' F {if($3 == 0d) yyerror("división entre cero"); else $$ = $1 / $3; } // Checar el caso de división entre cero.
   | F       {$$ = $1;}
   ;
 
 L : T            {$$ = $1;}
   | L '*' F {$$ = $1 * $3;}
-  | L '/' F {$$ = $1 / $3;} //Checar el caso de división entre cero
+  | L '/' F {if($3 == 0d) yyerror("división entre cero"); else $$ = $1 / $3; } //Checar el caso de división entre cero
   | F            {$$ = $1;}
   ;
 F : NUMERO {$$ = $1;}
