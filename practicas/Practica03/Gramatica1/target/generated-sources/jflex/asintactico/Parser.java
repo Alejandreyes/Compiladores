@@ -288,7 +288,7 @@ final static String yyrule[] = {
 "F : '-' NUMERO",
 };
 
-//#line 67 "../../../../src/main/byaccj/ari.y"
+//#line 66 "../../../../src/main/byaccj/ari.y"
 /*Tercera Sección*/
 
 /* Referencia a analizador léxico */
@@ -481,70 +481,70 @@ case 1:
 break;
 case 2:
 //#line 38 "../../../../src/main/byaccj/ari.y"
-{System.out.println("[OK] Cadena vacía");}
+{yyerror("Cadena vacía");}
 break;
 case 3:
-//#line 42 "../../../../src/main/byaccj/ari.y"
+//#line 41 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(2).dval + val_peek(0).dval;}
 break;
 case 4:
-//#line 43 "../../../../src/main/byaccj/ari.y"
+//#line 42 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(2).dval - val_peek(0).dval;}
 break;
 case 5:
-//#line 44 "../../../../src/main/byaccj/ari.y"
+//#line 43 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 6:
-//#line 47 "../../../../src/main/byaccj/ari.y"
+//#line 46 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 7:
-//#line 48 "../../../../src/main/byaccj/ari.y"
+//#line 47 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(2).dval + val_peek(0).dval;}
 break;
 case 8:
-//#line 49 "../../../../src/main/byaccj/ari.y"
+//#line 48 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(2).dval - val_peek(0).dval;}
 break;
 case 9:
-//#line 50 "../../../../src/main/byaccj/ari.y"
+//#line 49 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 10:
-//#line 53 "../../../../src/main/byaccj/ari.y"
+//#line 52 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(2).dval * val_peek(0).dval;}
 break;
 case 11:
-//#line 54 "../../../../src/main/byaccj/ari.y"
-{yyval.dval = val_peek(2).dval / val_peek(0).dval;}
+//#line 53 "../../../../src/main/byaccj/ari.y"
+{if(val_peek(0).dval == 0d) yyerror("división entre cero"); else yyval.dval = val_peek(2).dval / val_peek(0).dval; }
 break;
 case 12:
-//#line 55 "../../../../src/main/byaccj/ari.y"
+//#line 54 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 13:
-//#line 58 "../../../../src/main/byaccj/ari.y"
+//#line 57 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 14:
-//#line 59 "../../../../src/main/byaccj/ari.y"
+//#line 58 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(2).dval * val_peek(0).dval;}
 break;
 case 15:
-//#line 60 "../../../../src/main/byaccj/ari.y"
-{yyval.dval = val_peek(2).dval / val_peek(0).dval;}
+//#line 59 "../../../../src/main/byaccj/ari.y"
+{if(val_peek(0).dval == 0d) yyerror("división entre cero"); else yyval.dval = val_peek(2).dval / val_peek(0).dval; }
 break;
 case 16:
-//#line 61 "../../../../src/main/byaccj/ari.y"
+//#line 60 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 17:
-//#line 63 "../../../../src/main/byaccj/ari.y"
+//#line 62 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = val_peek(0).dval;}
 break;
 case 18:
-//#line 64 "../../../../src/main/byaccj/ari.y"
+//#line 63 "../../../../src/main/byaccj/ari.y"
 {yyval.dval = -val_peek(0).dval;}
 break;
 //#line 473 "Parser.java"

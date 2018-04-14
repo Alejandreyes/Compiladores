@@ -30,3 +30,6 @@ NUMERO = [1-9]+[0-9]* | [0-9]+
 
 //Hacemos lo mismo para los operadores.
 "+"|"-"|"*"|"/" { System.out.print("");return (int) yycharat(0); }
+
+//Si nos encontramos cualquier cosa que no sea un número o token lanzamos un error.
+. {System.out.println("[ERROR] La expresión aritmética no está bien formada");System.exit(1);}
