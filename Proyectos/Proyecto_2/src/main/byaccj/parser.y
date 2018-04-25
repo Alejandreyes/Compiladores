@@ -59,22 +59,54 @@ or_test: or_test 'or' and_test
     | and_test 'or'  and_test 
 ; 
 /*and_test: not_test ('and' not_test)**/
-and_test: not_test ('and' not_test)*
-  |
+and_test: not_test 'and' and_test
+  | and_test 'and' and_test
   ; 
 
-not_test: 'not' not_test | comparison
-comparison: expr (comp_op expr)*
-comp_op: '<'|'>'|'=='|'>='|'<='|'!='
-expr: term (('+'|'-') term)*
-term: factor (('*'|'/'|'%'|'//') factor)*
-factor: ('+'|'-') factor | power
-power: atom ['**' factor]
-atom: IDENTIFICADOR | ENTERO | CADENA
-    | REAL | BOOLEANO | '(' test ')'
+not_test: 'not' not_test 
+    | comparison
+    ;
+/* comparison: expr (comp_op expr)* */
+comparison: expr comparisonAux
+    ;
+comparisonAux  : comp_op expr
+    | expr
+    ;
 
+comp_op: '<'
+    |'>'
+    |'=='
+    |'>='
+    |'<='
+    |'!='
+    ;
+expr: expr '+' expr
+    | expr '-' expr
+    | term
+    ;  
+/* term: factor (('*'|'/'|'%'|'//') factor)* */    
 
-
+term: factor '*' factor
+    | factor '/' factor
+    | factor '%' factor
+    | factor '//' factor
+    ;
+/* factor: ('+'|'-') factor | power */    
+factor: '+' factor 
+    |   '-' factor
+    |   power
+    ;
+/* power: atom ['**' factor] */    
+power: atom 
+    | atom '**' factor
+    ;
+/* atom: IDENTIFICADOR | ENTERO | CADENA | REAL | BOOLEANO | '(' test ')' */
+atom: IDENTIFICADOR 
+    | ENTERO 
+    | CADENA
+    | REAL 
+    | BOOLEANO 
+    | '(' test ')'
 
 %%
 /* Referencia a analizador léxico */
