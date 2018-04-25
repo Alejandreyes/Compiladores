@@ -1,0 +1,60 @@
+   0  $accept : input $end
+
+   1  input : atom
+
+   2  atom : IDENTIFICADOR
+   3       | ENTERO
+   4       | REAL
+   5       | BOOLEANO
+
+state 0
+	$accept : . input $end  (0)
+
+	IDENTIFICADOR  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	BOOLEANO  shift 4
+	.  error
+
+	input  goto 5
+	atom  goto 6
+
+
+state 1
+	atom : IDENTIFICADOR .  (2)
+
+	.  reduce 2
+
+
+state 2
+	atom : ENTERO .  (3)
+
+	.  reduce 3
+
+
+state 3
+	atom : REAL .  (4)
+
+	.  reduce 4
+
+
+state 4
+	atom : BOOLEANO .  (5)
+
+	.  reduce 5
+
+
+state 5
+	$accept : input . $end  (0)
+
+	$end  accept
+
+
+state 6
+	input : atom .  (1)
+
+	.  reduce 1
+
+
+6 terminals, 3 nonterminals
+6 grammar rules, 7 states
