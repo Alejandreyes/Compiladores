@@ -2,7 +2,7 @@
 **  @author Diana Montes                                                       **
 **  @about Proyecto 1: Analizador léxico para p, subconjunto de Python.        **
 *********************************************************************************/
-package lexico;
+package asintactico;
 import java.util.Stack;
 
 %%
@@ -96,17 +96,19 @@ PARIZQ              ="("
 PARDER              =")"
 DOSPUNTOS               =":"
 PUNTOCOMA               =";"
+/* OPERADOR  		=       ("+" | "-" | "*" | "**" | "/" | "//" | "%" |
+			         "<" | ">" | "<=" | "+=" | "-=" | ">=" | "==" | "!=" | "<>" | "=" )
+SEPARADOR  		=       ("(" | ")" | ":" | ";" ) */
 SALTO          	        =        "\n"
 IDENTIFICADOR       	= 	([:letter:] | "_" )([:letter:] | "_" | [0-9])*
 ESC              	= 	(\\)
-CHAR_LITERAL   	        = 	([:letter:] | [:digit:] | "_" | "$" | " " | "#" | {OPERADOR} | {SEPARADOR}) | "\\"
+CHAR_LITERAL   	        = 	([:letter:] | [:digit:] | "_" | "$" | " " | "#" ) | "\\"
 COMENTARIO 		=     	"#".*{SALTO}
 BOOLEANO		=	("True" | "False")
 %%
 {COMENTARIO}      			{}
 <CADENA>{
-  {CHAR_LITERAL}*\"			{ System.out.print("CADENA(" + yytext().substring(0,yylength()-1) +  ")");
-  					 yybegin(CODIGO);}
+  {CHAR_LITERAL}			{ yybegin(CODIGO); return Parser.CADENA;}
   {SALTO}				{ System.out.println("Cadena mal construida, linea " + (yyline+1) ); System.exit(1);}
 }
 <YYINITIAL>{
@@ -118,7 +120,6 @@ BOOLEANO		=	("True" | "False")
   {ENTERO}				{ return Parser.NUMERO; }
   {REAL}   				{ return Parser.NUMERO; }
   {BOOLEANO}                 		{ return Parser.BOOLEANO; }
-  {IDENTIFICADOR}           		{ return Parser.IDENTIFICADOR; }
   {AND }                              {return Parser.AND;}                  
   {FROM}                              {return Parser.FROM;}
   {NOT }                              {return Parser.NOT ;}
@@ -139,7 +140,7 @@ BOOLEANO		=	("True" | "False")
   {MAYOR}                             {return Parser.MAYOR ;}
   {MENOR}                             {return Parser.MENOR ;}
   {MAYORIG   }                        {return Parser.MAYORIG ;}
-  {MENORIG   }                        {return Parser.MENORIG ;}
+  {MENOSIG   }                        {return Parser.MENOSIG ;}
   {IGUAL     }                        {return Parser.IGUAL ;}
   {DIST      }                        {return Parser.DIST ;}
   {MASIG     }                        {return Parser.MASIG ;}
@@ -149,14 +150,7 @@ BOOLEANO		=	("True" | "False")
   {PARDER    }                        {return Parser.PARDER ;}
   {DOSPUNTOS}                         {return Parser.DOSPUNTOS ;}
   {PUNTOCOMA}                         {return Parser.PUNTOCOMA ;}
-
-
-
-
-
-
-
-
+  {IDENTIFICADOR}           		{ return Parser.IDENTIFICADOR; }
   {SALTO}                 		{ yybegin(INDENTA); actual=0;}
   " "                        		{   }
 }
@@ -172,5 +166,5 @@ BOOLEANO		=	("True" | "False")
 					  yybegin(CODIGO);
 					}
 }
-<<EOF>>                                 {indentacion(0); System.exit(0);}
+<<EOF>>                                 {indentacion(0); System.out.println("Simulacion Exitosa"); System.exit(0);}
 [^]					{ }

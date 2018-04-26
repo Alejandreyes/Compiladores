@@ -3,7 +3,9 @@
   import java.io.*;
 %}
 
-%token IDENTIFICADOR ENTERO REAL BOOLEANO SALTO ENDMARKER
+%token IDENTIFICADOR NUMERO BOOLEANO SALTO AND FROM NOT WHILE FOR ELSE CADENA
+%token ELIF OR IF PRINT RETURN MAS MENOS MULT DIV EXP MOD MAYOR MENOR 
+%token MAYORIG MENOSIG IGUAL DIST MASIG MENORIG IGUALIG PARIZQ PARDER DOSPUNTOS PUNTOCOMA ENDMARKER
 /* Gramática con recursión izquierda */
 
 %%
@@ -12,7 +14,7 @@
 */
 file_input: SALTO file_input
           | stmt file_input
-          |ENDMARKER
+          |ENDMARKER   
 ;
 /* Gramatica simple_stmt: small_stmt SALTO */
 stmt: simple_stmt 
@@ -25,23 +27,23 @@ simple_stmt: small_stmt SALTO ;
 small_stmt: expr_stmt 
           | print_stmt
     ;
-/*expr_stmt: test '=' test*/
-expr_stmt: test '=' test ; 
+/*expr_stmt: test IGUAL test*/
+expr_stmt: test IGUAL test ; 
 
 /*print_stmt: 'print' test*/
-print_stmt: 'print' test ; 
+print_stmt: PRINT test ; 
 
 /*compound_stmt: if_stmt
              | while_stmt*/
 compound_stmt: if_stmt
              | while_stmt
              ; 
-/*if_stmt: 'if' test ':' suite ['else' ':' suite]*/             
-if_stmt: 'if' test ':' suite
-    | 'if' test ':' suite 'else' ':' suite
+/*if_stmt: 'if' test DOSPUNTOS suite [ELSE DOSPUNTOS suite]*/             
+if_stmt: IF test DOSPUNTOS suite
+    | IF test DOSPUNTOS suite ELSE DOSPUNTOS suite
     ;
-/*while_stmt: 'while' test ':' suite*/
-while_stmt: 'while' test ':' suite
+/*while_stmt: WHILE test DOSPUNTOS suite*/
+while_stmt: WHILE test DOSPUNTOS suite
 /*suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA*/
 suite: simple_stmt 
     | SALTO INDENTA stmtEst
@@ -54,16 +56,16 @@ stmtEst : stmt
 // test: or_test
 test: or_test
 
-/*or_test: and_test ('or' and_test)* Pasando a gramatica recursiva por la izquierda*/
-or_test: or_test 'or' and_test   
-    | and_test 'or'  and_test 
+/*or_test: and_test (OR and_test)* Pasando a gramatica recursiva por la izquierda*/
+or_test: or_test OR and_test   
+    | and_test OR  and_test 
 ; 
-/*and_test: not_test ('and' not_test)**/
-and_test: not_test 'and' and_test
-  | and_test 'and' and_test
+/*and_test: not_test (AND not_test)**/
+and_test: not_test AND and_test
+  | and_test AND and_test
   ; 
 
-not_test: 'not' not_test 
+not_test: NOT not_test 
     | comparison
     ;
 /* comparison: expr (comp_op expr)* */
@@ -73,44 +75,49 @@ comparisonAux  : comp_op expr
     | expr
     ;
 
-comp_op: '<'
-    |'>'
-    |'=='
-    |'>='
-    |'<='
-    |'!='
+comp_op: MENOR
+    |MAYOR
+    |IGUALIG
+    |MAYORIG
+    |MENORIG
+    |DIST
     ;
-expr: expr '+' expr
-    | expr '-' expr
+expr: expr MAS expr
+    | expr MENOS expr
     | term
     ;  
-/* term: factor (('*'|'/'|'%'|'//') factor)* */    
+/* term: factor ((MULT|DIV|MOD) factor)* */    
 
-term: factor '*' factor
-    | factor '/' factor
-    | factor '%' factor
-    | factor '//' factor
+term: factor MULT factor
+    | factor DIV factor
+    | factor MOD factor
+    
     ;
-/* factor: ('+'|'-') factor | power */    
-factor: '+' factor 
-    |   '-' factor
+/* factor: (MAS|MENOS) factor | power */    
+factor: MAS factor 
+    |   MENOS factor
     |   power
     ;
-/* power: atom ['**' factor] */    
+/* power: atom [EXP factor] */    
 power: atom 
-    | atom '**' factor
+    | atom EXP factor
     ;
-/* atom: IDENTIFICADOR | ENTERO | CADENA | REAL | BOOLEANO | '(' test ')' */
+/* atom: IDENTIFICADOR | ENTERO | CADENA | REAL | BOOLEANO | PARIZQ test PARDER */
 atom: IDENTIFICADOR 
     | ENTERO 
     | CADENA
     | REAL 
     | BOOLEANO 
-    | '(' test ')'
+    | PARIZQ test PARDER
 
 %%
 /* Referencia a analizador léxico */
 private Flexer lexer;
+
+/* Constructor */
+public Parser(Reader r) {
+    lexer = new Flexer(r, this);
+}
 
 private int yylex () {
     int yyl_return = -1;
@@ -127,11 +134,6 @@ private int yylex () {
 public void yyerror (String error) {
     System.err.println ("[ERROR]  " + error);
     System.exit(1);
-}
-
-/* Constructor */
-public Parser(Reader r) {
-    lexer = new Flexer(r, this);
 }
 
 /* Creación del parser e inicialización del reconocimiento */
