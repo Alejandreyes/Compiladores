@@ -1,6 +1,6 @@
 
 Pasos Para Compilar el Proyecto 
 
-mvn clean package
+mvn clean initialize package
 
 java -cp target/Analisissintactico-1.0.jar asintactico.Parser
