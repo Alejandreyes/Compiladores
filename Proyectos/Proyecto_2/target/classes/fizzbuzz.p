@@ -1,4 +1,3 @@
-# FizzBuzz
 indice = 1
 while indice < 31:
    otro = True

@@ -1,1 +1,3 @@
-Identificador
+if indice < 4 :  
+    print "perro"
+

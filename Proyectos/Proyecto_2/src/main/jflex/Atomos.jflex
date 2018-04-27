@@ -104,22 +104,22 @@ IDENTIFICADOR       	= 	([:letter:] | "_" )([:letter:] | "_" | [0-9])*
 ESC              	= 	(\\)
 CHAR_LITERAL   	        = 	([:letter:] | [:digit:] | "_" | "$" | " " | "#" ) | "\\"
 COMENTARIO 		=     	"#".*{SALTO}
-BOOLEANO		=	("True" | "False")
+/* BOOLEANO		=	("True" | "False") */
+TRUE                = "True"
+FALSE               = "False"
 %%
 {COMENTARIO}      			{}
-<CADENA>{
-  {CHAR_LITERAL}			{ yybegin(CODIGO); return Parser.CADENA;}
-  {SALTO}				{ System.out.println("Cadena mal construida, linea " + (yyline+1) ); System.exit(1);}
-}
+
 <YYINITIAL>{
-  " "+                        		{ System.out.println("Error de indentación. Línea " + (yyline+1) ); System.exit(1);}
-  .                               	{ yypushback(1); yybegin(CODIGO);}
+  " "+                        		{ System.exit(1);}
+  .                               	{ yybegin(CODIGO);}
 }
 <CODIGO>{
   \"					{ yybegin(CADENA); }
-  {ENTERO}				{ return Parser.NUMERO; }
-  {REAL}   				{ return Parser.NUMERO; }
-  {BOOLEANO}                 		{ return Parser.BOOLEANO; }
+  {ENTERO}				{ return Parser.ENTERO; }
+  {REAL}   				{ return Parser.REAL; }
+  {TRUE}                  {return Parser.TRUE ;}  
+  {FALSE}             {return Parser.FALSE ; }
   {AND }                              {return Parser.AND;}                  
   {FROM}                              {return Parser.FROM;}
   {NOT }                              {return Parser.NOT ;}
@@ -129,7 +129,7 @@ BOOLEANO		=	("True" | "False")
   {ELIF}                              {return Parser.ELIF ;}
   {OR    }                            {return Parser.OR ;}
   {IF    }                            {return Parser.IF ;}
-  {PRINT }                            {return Parser.PRINT ;}
+  {PRINT }                            {return Parser.PRINT;}
   {RETURN}                            {return Parser.RETURN ;}
   {MAS  }                             {return Parser.MAS ;}
   {MENOS}                             {return Parser.MENOS ;}
@@ -151,18 +151,22 @@ BOOLEANO		=	("True" | "False")
   {DOSPUNTOS}                         {return Parser.DOSPUNTOS ;}
   {PUNTOCOMA}                         {return Parser.PUNTOCOMA ;}
   {IDENTIFICADOR}           		{ return Parser.IDENTIFICADOR; }
-  {SALTO}                 		{ yybegin(INDENTA); actual=0;}
+  {SALTO}                 		{ yybegin(INDENTA); actual=0; return Parser.SALTO; }
   " "                        		{   }
 }
+<CADENA>{
+  {CHAR_LITERAL}			{ yybegin(CODIGO); return Parser.CADENA;}
+  {SALTO}				{ System.exit(1);}
+}
 <INDENTA>{
-  {SALTO}				{ actual = 0;}
-  " "                            	{ actual++;}
-  \t                             	{ actual += 4;}
+  {SALTO}				{ actual = 0; return Parser.SALTO;}
+  " "                            	{ actual++; return Parser.INDENTA;}
+  \t                             	{ actual += 4;return Parser.INDENTA;}
   .                               	{ yypushback(1);
-                                          if(!indentacion(actual)){
+                                          /* if(!indentacion(actual)){
                                                 System.out.println("Error de indentacion, linea "+(yyline+1));
                                                 System.exit(1);
-                                          }
+                                          } */
 					  yybegin(CODIGO);
 					}
 }
